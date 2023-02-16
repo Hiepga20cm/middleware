@@ -7,4 +7,5 @@ route.route("/login").post(Controller.signIn);
 route.route("/signUp").post(Controller.signUp);
 route.route("/refreshToken").post(Controller.refreshToken);
 route.route("/success").get(authMiddleware, Controller.success);
+route.route("/logout").get(authMiddleware, Controller.logout);
 module.exports = route;

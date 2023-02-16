@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = async (req, res, next) => {
+  console.log(req.headers.authorization);
   const token = req.headers.authorization.split(" ")[1];
   if (!token) {
     return res.status(404).json({
@@ -13,8 +14,9 @@ const authMiddleware = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-
-    return res.status(500);
+    return res.status(404).json({
+      message: "The user is not authentication",
+    });
   }
   // jwt.verify(token, "JWT_SECRET", function (err, user) {
   //   if (err) {

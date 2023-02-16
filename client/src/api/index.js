@@ -2,17 +2,21 @@ import axios from "axios";
 import JwtDecode from "jwt-decode";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
-
+export const axiosLogin = axios.create({
+  baseURL: "http://localhost:5000",
+  timeout: 3000,
+});
+console.log(cookies.get("token"));
 const axiosClient = axios.create({
   baseURL: "http://localhost:5000",
   timeout: 3000,
-  // headers: { authorization: "Bearer " + cookies.get("token") || null },
+  headers: { authorization: "Bearer " + cookies.get("token") },
 });
 export const axiosPrivate = axios.create({
   baseURL: "http://localhost:5000",
   timeout: 3000,
   headers: {
-    authorization: "Bearer " + cookies.get("token") || null,
+    authorization: "Bearer " + cookies.get("token"),
   },
 });
 
@@ -35,10 +39,10 @@ axiosClient.interceptors.request.use(async (config) => {
             .then((res) => {
               console.log("aaaw");
               console.log(res.data);
-              config.headers.authorization = `Bearer ${res.access_token}`;
-              cookies.set("token", res.access_token);
+              config.headers.authorization = `Bearer ${res.data.access_token}`;
+              cookies.set("token", res.data.access_token);
               //localStorage.setItem("refreshToken", res.data.refreshToken);
-              cookies.set("user", res.user);
+
               axiosClient.defaults.headers.authorization = `Bearer ${res.data.access_token}`;
               return config;
             });

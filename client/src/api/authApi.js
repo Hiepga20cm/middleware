@@ -14,6 +14,10 @@ const authApi = {
     const url = "/auth/register";
     return axiosClient.post(url, data);
   },
+  success: async () => {
+    const url = "/auth/success";
+    return axiosClient.get(url);
+  },
 };
 
 export default authApi;

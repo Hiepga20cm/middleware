@@ -7,11 +7,10 @@ const encodedToken = (userID) => {
     {
       iss: "Hiep Nguyen",
       sub: userID,
-      iat: new Date().getTime(),
     },
     "JWT_SECRET",
     {
-      expiresIn: "1m",
+      expiresIn: "10s",
     }
   );
 };
@@ -125,11 +124,16 @@ const success = async (req, res, next) => {
     return res.status(200).json({ success: true, message: " Thành công" });
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ success: false, message: " Thaats baij" });
   }
+};
+const logout = async (req, res, next) => {
+  console.log("a");
 };
 module.exports = {
   signIn,
   refreshToken,
   signUp,
   success,
+  logout,
 };
